@@ -1,40 +1,48 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
-import axios from 'axios';
+import { View, Text, TextInput, Button, StyleSheet, Alert, Image } from 'react-native';
+
 
 const LoginScreen = ({ onNavigateToRegister }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
   const handleLogin = async () => {
     try {
       const response = await axios.post('http://10.0.2.2:5000/api/login', { email, password });
-      // Lógica após login bem-sucedido (ex: navegar para a tela principal)
       Alert.alert('Login bem-sucedido', `Bem-vindo, ${response.data.name}!`);
     } catch (error) {
       console.error('Erro ao fazer login:', error);
       Alert.alert('Erro', 'Credenciais inválidas. Tente novamente.');
     }
-
   };
 
   return (
-    <View style={styles.container}>
+   <View style={styles.container}>
+     {/* Imagem no topo da tela */}
+     <Image
+       source={require('../assets/logo.jfif')} // Verifique se o caminho está correto
+       style={styles.logo}
+     />
+
       <Text style={styles.title}>Tela de Login</Text>
+
       <TextInput
         style={styles.input}
-        placeholder="Email"
+        placeholder="EMAIL"
+        placeholderTextColor="#d9edf3"
         value={email}
         onChangeText={setEmail}
       />
       <TextInput
         style={styles.input}
-        placeholder="Senha"
+        placeholder="SENHA"
+        placeholderTextColor="#d9edf3"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
       />
       <Button title="Entrar" onPress={handleLogin} />
-      <Button title="Criar uma conta" onPress={onNavigateToRegister} color="#841584" />
+      <Button title="Esqueceu sua senha?" onPress={onNavigateToRegister} color="#841584" />
     </View>
   );
 };
@@ -42,9 +50,15 @@ const LoginScreen = ({ onNavigateToRegister }) => {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    backgroundColor: '#fff',
+    backgroundColor: '#d9edf3',
     flex: 1,
     justifyContent: 'center',
+  },
+  logo: {
+    width: 100,
+    height: 100,
+    alignSelf: 'center',
+    marginBottom: 20,
   },
   title: {
     fontSize: 24,
@@ -54,7 +68,7 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    backgroundColor: '#646262',
     padding: 10,
     marginBottom: 10,
     borderRadius: 5,
