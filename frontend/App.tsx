@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Button } from 'react-native';
-import LoginScreen from 'C:/Users/welli/Desktop/rede/frontend/src/screeens/loginScreen.js';
-import RegisterScreen from 'C:/Users/welli/Desktop/rede/frontend/src/screeens/registerScreen.js';
+import LoginScreen from 'D:/RedeDoBem/Rede-Do-bem/frontend/src/screeens/loginScreen.js';
+import RegisterScreen from 'D:/RedeDoBem/Rede-Do-bem/frontend/src/screeens/registerScreen.js';
 
 const App = () => {
   const [showLogin, setShowLogin] = useState(true);
