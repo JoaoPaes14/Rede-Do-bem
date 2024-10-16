@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button,Image, StyleSheet, Alert,TouchableOpacit } from 'react-native';
+import { View, Text, TextInput, Button,Image, StyleSheet, Alert, } from 'react-native';
+import axios from 'axios';
 
 
 const LoginScreen = ({ onNavigateToRegister }) => {
@@ -30,7 +31,7 @@ const LoginScreen = ({ onNavigateToRegister }) => {
 
       <TextInput
         style={styles.input}
-        placeholder="EMAIL"
+        placeholder="E-MAIL"
         placeholderTextColor="#d9edf3"
         value={email}
         onChangeText={setEmail}
@@ -48,8 +49,12 @@ const LoginScreen = ({ onNavigateToRegister }) => {
       <View style={styles.buttonContainer} onTouchEnd={handleLogin}>
         <Text style={styles.buttonText}>Entrar</Text>
       </View>
+      {/* Texto que leva à tela de cadastro */}
+      <Text style={styles.toggleText} onPress={() => navigation.navigate('Register')}>
+        Ainda não tem conta? Cadastre-se
+      </Text>
  
-  <Button title="Esqueceu sua senha?" onPress={onNavigateToRegister} color="#841584" />
+ 
     </View>
   );
 };
@@ -85,22 +90,23 @@ const styles = StyleSheet.create({
     marginBottom: 30, 
   },
   buttonContainer: {
-    width: '50%', // Mantenha a largura igual à dos inputs
+    width: '50%', 
     alignSelf: 'center', 
     marginTop: 50,  
-    marginBottom: 50, 
+    marginBottom: 5, 
     paddingVertical: 10, 
-    borderRadius: 50, // Torna o botão arredondado
-    backgroundColor: '#646262', // Cor de fundo do botão
-    alignItems: 'center', // Centraliza o texto
+    borderRadius: 50, 
+    backgroundColor: '#646262', 
+    alignItems: 'center', 
   },
   buttonText: {
     color: '#fff', 
     fontSize: 16, 
   },
-  forgotPassword: {
-    color: '#841584', 
-    marginTop: 10, // Adicione um pequeno espaço acima
+  toggleText: {
+    marginTop: 1, 
+    color: '#007bff', 
+    textDecorationLine: 'underline', 
   },
 });
 

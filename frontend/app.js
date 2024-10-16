@@ -14,19 +14,8 @@ const App = () => {
     setShowLogin(true);
   };
 
-  return (
-    <View style={{ flex: 1 }}>
-      {showLogin ? (
-        <LoginScreen onNavigateToRegister={handleNavigateToRegister} />
-      ) : (
-        <RegisterScreen onNavigateToLogin={handleNavigateToLogin} />
-      )}
-      <Button
-        title={showLogin ? "Cadastrar-se" : "Voltar para Login"}
-        onPress={() => setShowLogin(!showLogin)}
-      />
-    </View>
-  );
+ 
+  
 };
 
 export default App;
