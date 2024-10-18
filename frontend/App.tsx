@@ -5,7 +5,25 @@ import RegisterScreen from 'D:/RedeDoBem/Rede-Do-bem/frontend/src/screeens/regis
 
 const App = () => {
   
+    const [showLogin, setShowLogin] = useState(true);
+  
 
+    const handleNavigateToRegister = () => {
+      setShowLogin(false);
+    };
+    const handleNavigateToLogin = () => {
+      setShowLogin(true);
+    };
+    return (
+      <View style={{ flex: 1 }}>
+        {showLogin ? (
+          <LoginScreen onNavigateToRegister={handleNavigateToRegister} />
+        ) : (
+          <RegisterScreen onNavigateToLogin={handleNavigateToLogin} />
+        )}
+        
+      </View>
+    );
   
 };
 

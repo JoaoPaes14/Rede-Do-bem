@@ -13,8 +13,16 @@ const App = () => {
   const handleNavigateToLogin = () => {
     setShowLogin(true);
   };
-
- 
+  return (
+    <View style={{ flex: 1 }}>
+      {showLogin ? (
+        <LoginScreen onNavigateToRegister={handleNavigateToRegister} />
+      ) : (
+        <RegisterScreen onNavigateToLogin={handleNavigateToLogin} />
+      )}
+      
+    </View>
+  );
   
 };
 
