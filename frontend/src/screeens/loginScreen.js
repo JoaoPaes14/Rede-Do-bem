@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button,Image, StyleSheet, Alert, } from 'react-native';
+import { View, Text, TextInput, Button,Image, StyleSheet,TouchableOpacity, Alert, } from 'react-native';
 import axios from 'axios';
 
 
@@ -49,10 +49,10 @@ const LoginScreen = ({ onNavigateToRegister }) => {
       <View style={styles.buttonContainer} onTouchEnd={handleLogin}>
         <Text style={styles.buttonText}>Entrar</Text>
       </View>
-      {/* Texto que leva à tela de cadastro */}
-      <Text style={styles.toggleText} onPress={() => navigation.navigate('Register')}>
-        Ainda não tem conta? Cadastre-se
-      </Text>
+      {/* Botão para navegação */}
+      <TouchableOpacity onPress={onNavigateToRegister}>
+                <Text style={styles.toggleText}>Ainda não tem conta? Cadastre-se na Organização</Text>
+            </TouchableOpacity>
  
  
     </View>

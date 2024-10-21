@@ -1,35 +1,42 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
-import axios from 'axios'; // Certifique-se de que axios está importado
+import { View, Text, TextInput, Button, StyleSheet, Alert,Image } from 'react-native';
 
-const RegisterScreen = ({ onNavigateToLogin }) => { 
-  const [name, setName] = useState('');
+const RegisterScreenOrg = ({ onNavigateToLogin }) => { 
+  const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
-  const [endereco, setAddress] = useState('');
-  const [telefone, setPhone] = useState('');
-  const [areaAtuacao, setAreaOfExpertise] = useState('');
-  const [password, setPassword] = useState('');
+  const [endereco, setEndereco] = useState(''); 
+  const [telefone, setTelefone] = useState(''); 
+  const [area_atuacao, setAreaAtuacao] = useState(''); 
+  const [senha, setSenha] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [cnpj, setCnpj] = useState('');
 
   const handleRegister = async () => {
-    if (password !== confirmPassword) {
+    if (senha !== confirmPassword) {
       Alert.alert('Erro', 'As senhas não coincidem.');
       return;
     }
 
     try {
-      const response = await axios.post('http://10.0.2.2:5000/api/register', { 
-        name, 
-        email, 
-        endereco, 
-        telefone, 
-        areaAtuacao, 
-        password, 
-        cnpj 
+      const response = await fetch('http://10.0.2.2:8082/CadastroOrgController', { 
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              nome,
+              email,
+              endereco,
+              telefone,
+              area_atuacao,
+              cnpj,
+              senha,
+          }),
       });
-      Alert.alert('Cadastro bem-sucedido', `Bem-vindo, ${response.data.name}!`);
-     
+
+      const data = await response.json(); 
+      Alert.alert('Cadastro bem-sucedido', `Bem-vindo, ${data.nome}!`); 
+
     } catch (error) {
       console.error('Erro ao cadastrar instituição', error);
       Alert.alert('Erro', 'Ocorreu um erro ao cadastrar. Tente novamente.');
@@ -38,12 +45,21 @@ const RegisterScreen = ({ onNavigateToLogin }) => {
 
   return (
     <View style={styles.container}>
+      {/* Imagem no topo da tela */}
+      <Image 
+        source={require('../assets/logo.jpg')} 
+        style={styles.logo} 
+        resizeMode="cover"
+      />
+       {/* Linha azul */}
+     <View style={styles.divider} />
+      
       <Text style={styles.title}>Cadastro de Instituição</Text>
       <TextInput
         style={styles.input}
         placeholder="Nome"
-        value={name}
-        onChangeText={setName}
+        value={nome}
+        onChangeText={setNome}
       />
       <TextInput
         style={styles.input}
@@ -54,26 +70,26 @@ const RegisterScreen = ({ onNavigateToLogin }) => {
       <TextInput
         style={styles.input}
         placeholder="Endereço"
-        value={address}
-        onChangeText={setAddress}
+        value={endereco} 
+        onChangeText={setEndereco} 
       />
       <TextInput
         style={styles.input}
         placeholder="Telefone"
-        value={phone}
-        onChangeText={setPhone}
+        value={telefone} 
+        onChangeText={setTelefone} 
       />
       <TextInput
         style={styles.input}
         placeholder="Área de Atuação"
-        value={areaOfExpertise}
-        onChangeText={setAreaOfExpertise}
+        value={area_atuacao} 
+        onChangeText={setAreaAtuacao} 
       />
       <TextInput
         style={styles.input}
         placeholder="Senha"
-        value={password}
-        onChangeText={setPassword}
+        value={senha} 
+        onChangeText={setSenha}
         secureTextEntry
       />
       <TextInput
@@ -89,31 +105,70 @@ const RegisterScreen = ({ onNavigateToLogin }) => {
         value={cnpj}
         onChangeText={setCnpj}
       />
-      <Button title="Cadastrar" onPress={handleRegister} />
+      <Button title="Cadastrar" onPress={handleRegister} color="#007bff" />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
-    backgroundColor: '#fff',
     flex: 1,
-    justifyContent: 'center',
+    backgroundColor: '#d9edf3',
+    alignItems: 'center', 
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center',
+  logo: {
+    width: '100%', 
+    height: '25%', 
   },
   input: {
+    width: '80%', 
+    alignSelf: 'center',
     borderWidth: 1,
     borderColor: '#ccc',
-    padding: 10,
-    marginBottom: 10,
-    borderRadius: 5,
+    backgroundColor: '#646262',
+    paddingVertical: 10, 
+    paddingHorizontal: 25, 
+    marginBottom: 20, 
+    borderRadius: 50, 
+    color: '#fff', 
+    fontSize: 12, 
+  },
+  divider: {
+    width: '100%', 
+    height: 2, 
+    backgroundColor: '#007bff', 
+    alignSelf: 'center',
+    marginBottom: 10, 
+  },
+  buttonContainer: {
+    width: '50%', 
+    alignSelf: 'center', 
+    marginTop: 50,  
+    marginBottom: 5, 
+    paddingVertical: 10, 
+    borderRadius: 50, 
+    backgroundColor: '#646262', 
+    alignItems: 'center', 
+  },
+  buttonText: {
+    color: '#fff', 
+    fontSize: 16, 
+  },
+  toggleText: {
+    marginTop: 1, 
+    color: '#007bff', 
+    textDecorationLine: 'underline', 
+  },
+  title: {
+    fontSize: 20, 
+    fontWeight: 'bold', 
+    color: '#333', 
+    marginBottom: 2 , 
+    textAlign: 'center', 
+    padding: 10, 
+    
   },
 });
 
-export default RegisterScreen;
+
+export default RegisterScreenOrg;
