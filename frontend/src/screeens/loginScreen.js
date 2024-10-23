@@ -3,19 +3,22 @@ import { View, Text, TextInput, Button,Image, StyleSheet,TouchableOpacity, Alert
 import axios from 'axios';
 
 
-const LoginScreen = ({ onNavigateToRegister }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const LoginScreen = ({ onNavigateToVolunt, onNavigateToCadastro }) => {
+  const [Email, setEmail] = useState('');
+  const [Senha, setSenha] = useState('');
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://10.0.2.2:5000/api/login', { email, password });
+      const response = await axios.post('http://10.0.2.2:808/api/login', { Email, Senha });
+      console.log('Resposta da API:', response.data); // Log da resposta
       Alert.alert('Login bem-sucedido', `Bem-vindo, ${response.data.name}!`);
+      onNavigateToVolunt(); // Navegar para a próxima tela
     } catch (error) {
-      console.error('Erro ao fazer login:', error);
+      console.error('Erro ao fazer login:', error.response ? error.response.data : error.message);
       Alert.alert('Erro', 'Credenciais inválidas. Tente novamente.');
     }
   };
+
 
   return (
    <View style={styles.container}>  
@@ -33,26 +36,23 @@ const LoginScreen = ({ onNavigateToRegister }) => {
         style={styles.input}
         placeholder="E-MAIL"
         placeholderTextColor="#d9edf3"
-        value={email}
+        value={Email}
         onChangeText={setEmail}
       />
       <TextInput
         style={styles.input}
         placeholder="SENHA"
         placeholderTextColor="#d9edf3"
-        value={password}
-        onChangeText={setPassword}
+        value={Senha}
+        onChangeText={setSenha}
         secureTextEntry
       />
-      
-  
-      <View style={styles.buttonContainer} onTouchEnd={handleLogin}>
-        <Text style={styles.buttonText}>Entrar</Text>
-      </View>
-      {/* Botão para navegação */}
-      <TouchableOpacity onPress={onNavigateToRegister}>
-                <Text style={styles.toggleText}>Ainda não tem conta? Cadastre-se na Organização</Text>
-            </TouchableOpacity>
+      {/* Botão para navegar ao cadastro */}
+      <TouchableOpacity style={styles.button} onPress={onNavigateToVolunt}>
+        <Text style={styles.buttonText}>ENTRAR</Text>
+      </TouchableOpacity>
+
+     
  
  
     </View>
@@ -108,6 +108,19 @@ const styles = StyleSheet.create({
     color: '#007bff', 
     textDecorationLine: 'underline', 
   },
+  button: {
+    backgroundColor: '#646262',  
+    paddingVertical: 12,          
+    paddingHorizontal: 20,        
+    borderRadius: 8,              
+    alignItems: 'center',        
+    marginVertical: 10,          
+  },
+  buttonText: {
+    color: '#FFFFFF',            
+    fontSize: 16,                 
+    fontWeight: 'bold',           
+  }
 });
 
 export default LoginScreen;

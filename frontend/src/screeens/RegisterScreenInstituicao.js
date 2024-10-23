@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert,Image } from 'react-native';
 
-const RegisterScreenOrg = ({ onNavigateToLogin }) => { 
+const RegisterScreenOrg = ({  onNavigateToResgister }) => { 
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [endereco, setEndereco] = useState(''); 

@@ -2,24 +2,41 @@ import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import LoginScreen from 'C:/Users/welli/Desktop/rede/frontend/src/screeensloginScreen.js';
 import RegisterScreenOrg from 'C:/Users/welli/Desktop/rede/frontend/src/RegisterScreenInstituicao.js';
+import IntCadstradaScreen from 'C:/Users/welli/Desktop/rede/frontend/src/IntCadstradaScreen.js';
+
+
 
 const App = () => {
-    const [showLogin, setShowLogin] = useState(true);
-    
-    const handleNavigateToRegister = () => {
-        setShowLogin(false); // Navega para a tela de registro
+    const [screen, setScreen] = useState('login');  // Controla qual tela deve ser exibida
+
+    // Funções de navegação
+    const handleNavigateToVolunt = () => {
+        setScreen('instituicoesCadastradas');  // Navega para a tela de instituições cadastradas
+    };
+
+    const handleNavigateToCadastro = () => {
+        setScreen('register');  // Navega para a tela de cadastro de organizações
     };
 
     const handleNavigateToLogin = () => {
-        setShowLogin(true); // Volta para a tela de login
+        setScreen('login');  // Volta para a tela de login
     };
 
     return (
         <View style={styles.container}>
-            {showLogin ? (
-                <LoginScreen onNavigateToRegister={handleNavigateToRegister} />
-            ) : (
-                <RegisterScreenOrg onNavigateToLogin={handleNavigateToLogin} />
+            {/* Tela de Login */}
+            {screen === 'login' && (
+                <LoginScreen onNavigateToVolunt={handleNavigateToVolunt} onNavigateToCadastro={handleNavigateToCadastro} />
+            )}
+            
+            {/* Tela de Instituições Cadastradas */}
+            {screen === 'instituicoesCadastradas' && (
+                <IntCadstradaScreen onNavigateToCadastro={handleNavigateToCadastro} />
+            )}
+
+            {/* Tela de Registro de Organização */}
+            {screen === 'register' && (
+                <RegisterScreenOrg onNavigateToResgister={handleNavigateToLogin} />
             )}
         </View>
     );

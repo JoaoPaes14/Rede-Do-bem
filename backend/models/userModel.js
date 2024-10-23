@@ -1,30 +1,41 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
 
-const User = sequelize.define('User', {
-  id: {
+const Voluntario = sequelize.define('Voluntario', {
+  Cod_voluntario: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    unique: true,
     primaryKey: true,
-    autoIncrement: true  // Para auto-incremento do ID
+    autoIncrement: true,
   },
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  email: {
-    type: DataTypes.STRING,
+  Nome: {
+    type: DataTypes.STRING(50),
     allowNull: false,
-    unique: true
   },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false
-  }
+  Idade: {
+    type: DataTypes.SMALLINT,
+    allowNull: true,
+  },
+  Email: {
+    type: DataTypes.STRING(50),
+    allowNull: false,
+    unique: true,
+  },
+  Senha: {
+    type: DataTypes.STRING(50),
+    allowNull: false,
+  },
+  Qtd_horas_disponiveis: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  fk_Organizacao_Cod_organizacao: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
 }, {
-  tableName: 'users',
-  timestamps: true
+  tableName: 'voluntario',
+  timestamps: true,
 });
 
-module.exports = User;
+module.exports = Voluntario;
