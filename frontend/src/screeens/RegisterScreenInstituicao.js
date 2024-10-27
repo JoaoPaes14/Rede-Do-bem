@@ -18,7 +18,7 @@ const RegisterScreenOrg = ({  onNavigateToResgister }) => {
     }
 
     try {
-      const response = await fetch('http://10.0.2.2:8082/CadastroOrgController', { 
+      const response = await fetch('http://10.0.2.2:8082/api/Organizacao', { 
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
