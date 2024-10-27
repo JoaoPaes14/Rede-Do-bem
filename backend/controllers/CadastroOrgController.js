@@ -1,40 +1,42 @@
-//const Organizacao = require('../models/CadastroOrgModel')
+const Organizacao = require('../models/CadastroOrgModel');
 
-import { db } from "../config/db.js";
+const getOrganizacoes = async (req, res) => {
+  const id = req.params.id;
 
-const app = express();//criar app
-app.use(express.json());
-const port = 8082;
-
-app.post('/cadastrarOrg', async (req, res) => {
   try {
-    const { nome, email, endereco, telefone, area_atuacao, senha, cnpj } = req.body;
-
-    if (!nome || !email || !endereco || !telefone || !area_atuacao || !senha || !cnpj) {
-      return res.status(400).json({ message: 'Por favor, preencha todos os campos' });
+    if (id) {
+      const organizacao = await Organizacao.findByPk(id);
+      if (!organizacao) {
+        return res.status(404).json({ message: 'Organização não encontrada' });
+      }
+      return res.json(organizacao);
     }
 
-    const q = 'INSERT INTO Organizacao (nome,email,endereco,telefone,area_atuacao,senha,cnpj) VALUES (?, ?, ?, ?, ?, ?, ?)';
-    const values = [nome, email, endereco, telefone, area_atuacao, senha, cnpj];
-
-    const result = await db.query(q, values);
-  } catch (err) {
-    console.error('Erro ao cadastrar organização!', err);
-    res.status(500).json({ message: 'Erro ao cadastrar organização!', err });
+    const organizacoes = await Organizacao.findAll();
+    return res.json(organizacoes);
+  } catch (error) {
+    return res.status(500).json({ message: 'Erro ao buscar organizações' });
   }
-});
+};
 
-// try {
-// const OrganizacaoExists = await Organizacao.findOne({ where: { email } });
-// if (OrganizacaoExists) {
-// return res.status(400).json({ message: 'Email já cadastrado.' });
-// }
+const createOrganizacao = async (req, res) => {
+  const { nome, email, endereco, telefone, area_atuacao, senha, cnpj } = req.body;
 
-// const newOrganizacao = await Organizacao.create({ nome, email, endereco, telefone, area_atuacao, senha, cnpj });
-//   res.status(201).json(newOrganizacao);
-// } catch (error) {
-//   res.status(500).json({ message: 'Erro ao cadastrar organização.' });
-// }
+  if (!nome || !email || !endereco || !telefone || !area_atuacao || !senha || !cnpj) {
+    return res.status(400).json({ message: 'Por favor, preencha todos os campos' });
+  }
 
+  try {
+    const organizacaoExists = await Organizacao.findOne({ where: { email } });
+    if (organizacaoExists) {
+      return res.status(400).json({ message: 'Organização já existe com esse email' });
+    }
 
-module.exports = { createOrganizacao };
+    const newOrganizacao = await Organizacao.create({ nome, email, endereco, telefone, area_atuacao, senha, cnpj });
+    return res.status(201).json(newOrganizacao);
+  } catch (error) {
+    return res.status(500).json({ message: 'Erro ao criar organização' });
+  }
+};
+
+module.exports = { getOrganizacoes, createOrganizacao };

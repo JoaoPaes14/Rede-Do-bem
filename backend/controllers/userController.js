@@ -1,21 +1,20 @@
 const User = require('../models/userModel');
 
 const getUsers = async (req, res) => {
-  const id = req.params.id; // Captura o ID da rota, se necessário
+  const id = req.params.id;
 
   try {
-    // Se um ID for fornecido, busca um usuário específico
+
     if (id) {
       const user = await User.findByPk(id);
       if (!user) {
         return res.status(404).json({ message: 'Usuário não encontrado' });
       }
-      return res.json(user); // Retorna o usuário específico
+      return res.json(user);
     }
 
-    // Se nenhum ID for fornecido, busca todos os usuários
     const users = await User.findAll();
-    return res.json(users); // Retorna a lista de usuários
+    return res.json(users);
   } catch (error) {
     return res.status(500).json({ message: 'Erro ao buscar usuários' });
   }
