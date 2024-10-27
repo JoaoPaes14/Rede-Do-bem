@@ -7,6 +7,7 @@ const getUsers = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: 'Erro ao buscar usuários' });
   }
+  //para fazer um FindById /users/{id}
   try {
     const users = await User.findByPk(id);
     res.json(users);
@@ -14,15 +15,17 @@ const getUsers = async (req, res) => {
     res.status(404).json({mensage: 'Usuario não encontrado'})
   }
 };
-const createUser = async (req, res) => {
-  const { name, email, password , id } = req.body;
 
-  if (!name || !email || !password || !id ) {
+
+const createUser = async (req, res) => {
+  const { name, email, password } = req.body;
+
+  if (!name || !email || !password) {
     return res.status(400).json({ message: 'Por favor, preencha todos os campos' });
   }
 
   try {
-    const userExists = await User.findOne({ where: { email } });
+    const userExists = await User.findOne({ where: { name } });
     if (userExists) {
       return res.status(400).json({ message: 'Usuário já existe' });
     }
