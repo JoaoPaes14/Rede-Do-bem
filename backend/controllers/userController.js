@@ -1,21 +1,25 @@
 const User = require('../models/userModel');
 
 const getUsers = async (req, res) => {
+  const id = req.params.id; // Captura o ID da rota, se necessário
+
   try {
+    // Se um ID for fornecido, busca um usuário específico
+    if (id) {
+      const user = await User.findByPk(id);
+      if (!user) {
+        return res.status(404).json({ message: 'Usuário não encontrado' });
+      }
+      return res.json(user); // Retorna o usuário específico
+    }
+
+    // Se nenhum ID for fornecido, busca todos os usuários
     const users = await User.findAll();
-    res.json(users);
+    return res.json(users); // Retorna a lista de usuários
   } catch (error) {
-    res.status(500).json({ message: 'Erro ao buscar usuários' });
-  }
-  //para fazer um FindById /users/{id}
-  try {
-    const users = await User.findByPk(id);
-    res.json(users);
-  }catch (error){
-    res.status(404).json({mensage: 'Usuario não encontrado'})
+    return res.status(500).json({ message: 'Erro ao buscar usuários' });
   }
 };
-
 
 const createUser = async (req, res) => {
   const { name, email, password } = req.body;
@@ -31,9 +35,9 @@ const createUser = async (req, res) => {
     }
 
     const newUser = await User.create({ name, email, password });
-    res.status(201).json(newUser);
+    return res.status(201).json(newUser);
   } catch (error) {
-    res.status(500).json({ message: 'Erro ao criar usuário' });
+    return res.status(500).json({ message: 'Erro ao criar usuário' });
   }
 };
 
