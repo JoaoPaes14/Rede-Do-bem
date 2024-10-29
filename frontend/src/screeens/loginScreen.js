@@ -9,7 +9,7 @@ const LoginScreen = ({ onNavigateToVolunt, onNavigateToCadastro }) => {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://10.0.2.2:8082/api/login', { Email, Senha });
+      const response = await axios.post('http://10.0.2.2:8088/api/login', { Email, Senha });
       console.log('Resposta da API:', response.data); // Log da resposta
       Alert.alert('Login bem-sucedido', `Bem-vindo, ${response.data.name}!`);
       onNavigateToVolunt(); // Navegar para a próxima tela

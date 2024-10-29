@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert,Image,ScrollView } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Alert, Image, ScrollView } from 'react-native';
 import axios from "axios";
 
-const RegisterScreenOrg = ({  onNavigateToResgister }) => { 
+const RegisterScreenOrg = ({ onNavigateToVagas,onNavigateToRegister }) => { 
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [endereco, setEndereco] = useState(''); 
@@ -12,34 +12,37 @@ const RegisterScreenOrg = ({  onNavigateToResgister }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [cnpj, setCnpj] = useState('');
 
-    const handleRegister = async () => {
-        if (senha !== confirmPassword) {
-            Alert.alert('Erro', 'As senhas não coincidem.');
-            return;
-        }
+  const handleRegister = async () => {
+    if (senha !== confirmPassword) {
+      Alert.alert('Erro', 'As senhas não coincidem.');
+      return;
+    }
 
-        try {
-            const response = await axios.post('http://10.0.2.2:8082/api/Organizacao', {
-                nome,
-                email,
-                endereco,
-                telefone,
-                area_atuacao,
-                senha,
-                cnpj,
-            });
+    try {
+      const response = await axios.post('http://10.0.2.2:8088/api/Organizacao', {
+        nome,
+        email,
+        endereco,
+        telefone,
+        area_atuacao,
+        senha,
+        cnpj,
+      });
 
-
-            if (response.status >= 200 && response.status < 300) {
-                Alert.alert('Cadastro bem-sucedido', `Bem-vindo, ${response.data.nome || response.data.Nome}!`);
-            }
-        } catch (error) {
-
-            console.error('Erro ao cadastrar instituição', error);
-            const errorMessage = error.response?.data?.message || 'Ocorreu um erro ao cadastrar. Tente novamente.';
-            Alert.alert('Erro', errorMessage);
-        }
-    };
+      if (response.status >= 200 && response.status < 300) {
+        Alert.alert('Cadastro bem-sucedido', `Bem-vindo, ${response.data.nome || response.data.Nome}!`, [
+          {
+            text: 'OK',
+            onPress: () => onNavigateToVagas(), // Navega para a tela de vagas após o cadastro bem-sucedido
+          },
+        ]);
+      }
+    } catch (error) {
+      console.error('Erro ao cadastrar instituição', error);
+      const errorMessage = error.response?.data?.message || 'Ocorreu um erro ao cadastrar. Tente novamente.';
+      Alert.alert('Erro', errorMessage);
+    }
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -49,8 +52,8 @@ const RegisterScreenOrg = ({  onNavigateToResgister }) => {
         style={styles.logo} 
         resizeMode="cover"
       />
-       {/* Linha azul */}
-     <View style={styles.divider} />
+      {/* Linha azul */}
+      <View style={styles.divider} />
       
       <Text style={styles.title}>Cadastro de Instituição</Text>
       <TextInput
@@ -104,7 +107,7 @@ const RegisterScreenOrg = ({  onNavigateToResgister }) => {
         onChangeText={setCnpj}
       />
       <Button title="Cadastrar" onPress={handleRegister} color="#007bff" />
-      </ScrollView>
+    </ScrollView>
   );
 };
 
@@ -138,25 +141,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginBottom: 10, 
   },
-  buttonContainer: {
-    width: '50%', 
-    alignSelf: 'center', 
-    marginTop: 50,  
-    marginBottom: 5, 
-    paddingVertical: 10, 
-    borderRadius: 50, 
-    backgroundColor: '#646262', 
-    alignItems: 'center', 
-  },
-  buttonText: {
-    color: '#fff', 
-    fontSize: 16, 
-  },
-  toggleText: {
-    marginTop: 1, 
-    color: '#007bff', 
-    textDecorationLine: 'underline', 
-  },
   title: {
     fontSize: 20, 
     fontWeight: 'bold', 
@@ -164,9 +148,7 @@ const styles = StyleSheet.create({
     marginBottom: 2 , 
     textAlign: 'center', 
     padding: 10, 
-    
   },
 });
-
 
 export default RegisterScreenOrg;

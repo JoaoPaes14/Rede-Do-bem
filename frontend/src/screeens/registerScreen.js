@@ -9,7 +9,7 @@ const RegisterScreen = () => {
 
   const handleRegister = async () => {
     try {
-      const response = await axios.post('http://10.0.2.2:5000/api/register', { name, email, password });
+      const response = await axios.post('http://10.0.2.2:8088/api/register', { name, email, password });
       Alert.alert('Cadastro bem-sucedido', `Bem-vindo, ${response.data.name}!`);
      
     } catch (error) {

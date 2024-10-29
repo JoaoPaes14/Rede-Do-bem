@@ -5,10 +5,11 @@ import { View, StyleSheet } from 'react-native';
 import LoginScreen from 'C:/Users/welli/Desktop/rede/frontend/src/screeensloginScreen.js';
 import RegisterScreenOrg from 'C:/Users/welli/Desktop/rede/frontend/src/RegisterScreenInstituicao.js';
 import IntCadstradaScreen from 'C:/Users/welli/Desktop/rede/frontend/src/IntCadstradaScreen.js';
+import CadastroVagas from 'C:/Users/welli/Desktop/rede/frontend/src/CadastroVagas.js';
 
 
 const App = () => {
-  const [screen, setScreen] = useState('login');  // Controla qual tela deve ser exibida
+  const [screen, setScreen] = useState('vagas');  // Controla qual tela deve ser exibida
 
   // Funções de navegação
   const handleNavigateToVolunt = () => {
@@ -23,7 +24,9 @@ const App = () => {
       setScreen('login');  // Volta para a tela de login
       <StatusBar style="auto" />
   };
-
+  const handleNavigateToVagas = () => {
+    setScreen('vagas'); // Navega para a tela de cadastro de vagas
+};
   return (
       <View style={styles.container}>
           {/* Tela de Login */}
@@ -39,6 +42,11 @@ const App = () => {
           {/* Tela de Registro de Organização */}
           {screen === 'register' && (
               <RegisterScreenOrg onNavigateToResgister={handleNavigateToLogin} />
+          )}
+
+          {/* Tela de Cadastro de Vagas */}
+          {screen === 'vagas' && (
+              <CadastroVagas onNavigateToVagas={handleNavigateToVagas} />
           )}
       </View>
   );
