@@ -9,7 +9,7 @@ import CadastroVagas from 'C:/Users/welli/Desktop/rede/frontend/src/CadastroVaga
 
 
 const App = () => {
-  const [screen, setScreen] = useState('vagas');  // Controla qual tela deve ser exibida
+  const [screen, setScreen] = useState('login');  // Controla qual tela deve ser exibida
 
   // Funções de navegação
   const handleNavigateToVolunt = () => {

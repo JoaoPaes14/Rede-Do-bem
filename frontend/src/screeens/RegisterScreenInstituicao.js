@@ -1,36 +1,44 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert, Image, ScrollView } from 'react-native';
-import axios from "axios";
 
-const RegisterScreenOrg = ({ onNavigateToVagas,onNavigateToRegister }) => { 
+
+const RegisterScreenOrg = ({ onNavigateToVagas, onNavigateToRegister }) => {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
-  const [endereco, setEndereco] = useState(''); 
-  const [telefone, setTelefone] = useState(''); 
-  const [area_atuacao, setAreaAtuacao] = useState(''); 
+  const [endereco, setEndereco] = useState('');
+  const [telefone, setTelefone] = useState('');
+  const [area_atuacao, setAreaAtuacao] = useState('');
   const [senha, setSenha] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [cnpj, setCnpj] = useState('');
 
-  const handleRegister = async () => {
+  const handleCadastro = async () => {
     if (senha !== confirmPassword) {
       Alert.alert('Erro', 'As senhas não coincidem.');
       return;
     }
 
     try {
-      const response = await axios.post('http://10.0.2.2:8088/api/Organizacao', {
-        nome,
-        email,
-        endereco,
-        telefone,
-        area_atuacao,
-        senha,
-        cnpj,
+      const response = await fetch('http://localhost:8088/api/Organizacao', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          Nome: nome,
+          Email: email,
+          Endereco: endereco,
+          Telefone: telefone,
+          Area_atuacao: area_atuacao,
+          Senha: senha,
+          Cnpj: cnpj,
+        }),
       });
 
+      const data = await response.json();
+
       if (response.status >= 200 && response.status < 300) {
-        Alert.alert('Cadastro bem-sucedido', `Bem-vindo, ${response.data.nome || response.data.Nome}!`, [
+        Alert.alert('Cadastro bem-sucedido', `Bem-vindo, ${data.nome || data.Nome}!`, [
           {
             text: 'OK',
             onPress: () => onNavigateToVagas(), // Navega para a tela de vagas após o cadastro bem-sucedido
@@ -47,14 +55,14 @@ const RegisterScreenOrg = ({ onNavigateToVagas,onNavigateToRegister }) => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {/* Imagem no topo da tela */}
-      <Image 
-        source={require('../assets/logo.jpg')} 
-        style={styles.logo} 
+      <Image
+        source={require('../assets/logo.jpg')}
+        style={styles.logo}
         resizeMode="cover"
       />
       {/* Linha azul */}
       <View style={styles.divider} />
-      
+
       <Text style={styles.title}>Cadastro de Instituição</Text>
       <TextInput
         style={styles.input}
@@ -71,25 +79,25 @@ const RegisterScreenOrg = ({ onNavigateToVagas,onNavigateToRegister }) => {
       <TextInput
         style={styles.input}
         placeholder="Endereço"
-        value={endereco} 
-        onChangeText={setEndereco} 
+        value={endereco}
+        onChangeText={setEndereco}
       />
       <TextInput
         style={styles.input}
         placeholder="Telefone"
-        value={telefone} 
-        onChangeText={setTelefone} 
+        value={telefone}
+        onChangeText={setTelefone}
       />
       <TextInput
         style={styles.input}
         placeholder="Área de Atuação"
-        value={area_atuacao} 
-        onChangeText={setAreaAtuacao} 
+        value={area_atuacao}
+        onChangeText={setAreaAtuacao}
       />
       <TextInput
         style={styles.input}
         placeholder="Senha"
-        value={senha} 
+        value={senha}
         onChangeText={setSenha}
         secureTextEntry
       />
@@ -106,7 +114,7 @@ const RegisterScreenOrg = ({ onNavigateToVagas,onNavigateToRegister }) => {
         value={cnpj}
         onChangeText={setCnpj}
       />
-      <Button title="Cadastrar" onPress={handleRegister} color="#007bff" />
+      <Button title="Cadastrar" onPress={handleCadastro} color="#007bff" />
     </ScrollView>
   );
 };
@@ -115,39 +123,39 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     backgroundColor: '#d9edf3',
-    alignItems: 'center', 
+    alignItems: 'center',
   },
   logo: {
-    width: '100%', 
-    height: '25%', 
+    width: '100%',
+    height: '25%',
   },
   input: {
-    width: '80%', 
+    width: '80%',
     alignSelf: 'center',
     borderWidth: 1,
     borderColor: '#ccc',
     backgroundColor: '#646262',
-    paddingVertical: 10, 
-    paddingHorizontal: 25, 
-    marginBottom: 20, 
-    borderRadius: 50, 
-    color: '#fff', 
-    fontSize: 12, 
+    paddingVertical: 10,
+    paddingHorizontal: 25,
+    marginBottom: 20,
+    borderRadius: 50,
+    color: '#fff',
+    fontSize: 12,
   },
   divider: {
-    width: '100%', 
-    height: 2, 
-    backgroundColor: '#007bff', 
+    width: '100%',
+    height: 2,
+    backgroundColor: '#007bff',
     alignSelf: 'center',
-    marginBottom: 10, 
+    marginBottom: 10,
   },
   title: {
-    fontSize: 20, 
-    fontWeight: 'bold', 
-    color: '#333', 
-    marginBottom: 2 , 
-    textAlign: 'center', 
-    padding: 10, 
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 2,
+    textAlign: 'center',
+    padding: 10,
   },
 });
 

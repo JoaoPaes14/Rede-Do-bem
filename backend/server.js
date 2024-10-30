@@ -4,11 +4,16 @@ const { connectDB, sequelize } = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
 const CadastroOrgRoutes = require("./routes/CadastroOrgRoutes");
 const VagasRoutes = require('./routes/VagasRoutes'); 
+const cors = require('cors');
 
 dotenv.config();
 
 const app = express();
-
+app.use(cors({
+  origin: 'http://localhost:8081', 
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 app.use(express.json());
 
 connectDB();

@@ -7,7 +7,7 @@ import IntCadstradaScreen from './src/screeens/IntCadastradaScreen.js';
 import CadastroVagas from './src/screeens/CadastroVagas.js';
 
 const App = () => {
-    const [screen, setScreen] = useState('vagas');  // Controla qual tela deve ser exibida
+    const [screen, setScreen] = useState('login');  // Controla qual tela deve ser exibida
   
     // Funções de navegação
     const handleNavigateToVolunt = () => {

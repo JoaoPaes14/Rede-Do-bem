@@ -39,7 +39,7 @@ const Vagas = sequelize.define('Vagas', {
   }
 }, {
   tableName: 'Vagas',
-  timestamps: true 
+  timestamps: false
 });
 
 module.exports = Vagas;

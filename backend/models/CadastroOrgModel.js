@@ -13,35 +13,35 @@ const Organizacao = sequelize.define('Organizacao', {
 
     Nome: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         unique: true,
     },
     Email: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         unique: true
     },
     Endereco: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     Telefone: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: true
 
     },
     Area_atuacao: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     Senha: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull:true
 
     },
     Cnpj: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull:true,
         unique: true,
     }
 }, {

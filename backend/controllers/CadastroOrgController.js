@@ -20,19 +20,19 @@ const getOrganizacoes = async (req, res) => {
 };
 
 const createOrganizacao = async (req, res) => {
-  const { nome, email, endereco, telefone, area_atuacao, senha, cnpj } = req.body;
+  const { Nome, Email, Endereco, Telefone, Area_atuacao, Senha, Cnpj } = req.body;
 
-  if (!nome || !email || !endereco || !telefone || !area_atuacao || !senha || !cnpj) {
+  if (!Nome || !Email || !Endereco || !Telefone || !Area_atuacao || !Senha || !Cnpj) {
     return res.status(400).json({ message: 'Por favor, preencha todos os campos' });
   }
 
   try {
-    const organizacaoExists = await Organizacao.findOne({ where: { email } });
+    const organizacaoExists = await Organizacao.findOne({ where: { Email } });
     if (organizacaoExists) {
       return res.status(400).json({ message: 'Organização já existe com esse email' });
     }
 
-    const newOrganizacao = await Organizacao.create({ nome, email, endereco, telefone, area_atuacao, senha, cnpj });
+    const newOrganizacao = await Organizacao.create({ Nome, Email, Endereco, Telefone, Area_atuacao, Senha, Cnpj });
     return res.status(201).json(newOrganizacao);
   } catch (error) {
     console.error('Erro ao criar organização:', error);

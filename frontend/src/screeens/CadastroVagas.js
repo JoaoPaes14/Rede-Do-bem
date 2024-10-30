@@ -16,7 +16,7 @@ const RegisterVagas = ({ onNavigateToVagas }) => {
     }
 
     try {
-      const response = await fetch('http://10.0.2.2:8083/api/Vagas', {
+      const response = await fetch('http://localhost:8088/api/Vagas', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
