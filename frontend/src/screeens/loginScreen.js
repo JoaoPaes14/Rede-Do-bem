@@ -22,14 +22,13 @@ const LoginScreen = ({ onNavigateToVolunt, onNavigateToCadastro }) => {
 
   return (
    <View style={styles.container}>  
-   
-      {/* Imagem no topo da tela */}
+
       <Image 
         source={require('../assets/logo.jpg')} 
         style={styles.logo} 
         resizeMode="cover"
       />
-       {/* Linha azul */}
+
      <View style={styles.divider} />
 
       <TextInput
@@ -47,13 +46,10 @@ const LoginScreen = ({ onNavigateToVolunt, onNavigateToCadastro }) => {
         onChangeText={setSenha}
         secureTextEntry
       />
-      {/* Botão para navegar ao cadastro */}
+
       <TouchableOpacity style={styles.button} onPress={onNavigateToVolunt}>
         <Text style={styles.buttonText}>ENTRAR</Text>
       </TouchableOpacity>
-
-     
- 
  
     </View>
   );
@@ -116,11 +112,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',        
     marginVertical: 10,          
   },
-  buttonText: {
-    color: '#FFFFFF',            
-    fontSize: 16,                 
-    fontWeight: 'bold',           
-  }
+
 });
 
 export default LoginScreen;
