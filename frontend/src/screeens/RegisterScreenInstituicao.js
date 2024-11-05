@@ -37,6 +37,8 @@ const RegisterScreenOrg = ({  onNavigateToResgister }) => {
       const data = await response.json(); 
       Alert.alert('Cadastro bem-sucedido', `Bem-vindo, ${data.nome}!`); 
 
+      onNavigateCadastroVagas
+
     } catch (error) {
       console.error('Erro ao cadastrar instituição', error);
       Alert.alert('Erro', 'Ocorreu um erro ao cadastrar. Tente novamente.');
@@ -106,6 +108,7 @@ const RegisterScreenOrg = ({  onNavigateToResgister }) => {
         onChangeText={setCnpj}
       />
       <Button title="Cadastrar" onPress={handleRegister} color="#007bff" />
+      <Button title ="Cadastrar Vagas" onPress={onNavigateCadastroVagas} color="#28a745"/>
     </View>
   );
 };
