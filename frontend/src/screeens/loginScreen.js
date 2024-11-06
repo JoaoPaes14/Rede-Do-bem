@@ -3,7 +3,7 @@ import { View, Text, TextInput, Button,Image, StyleSheet,TouchableOpacity, Alert
 import axios from 'axios';
 
 
-const LoginScreen = ({ onNavigateToVolunt, onNavigateToCadastro }) => {
+const LoginScreen = ({ onNavigateToVoluntario, onNavigateToCadastro,onNavigateToVolunt }) => {
   const [Email, setEmail] = useState('');
   const [Senha, setSenha] = useState('');
 
@@ -51,6 +51,7 @@ const LoginScreen = ({ onNavigateToVolunt, onNavigateToCadastro }) => {
       <TouchableOpacity style={styles.button} onPress={onNavigateToVolunt}>
         <Text style={styles.buttonText}>ENTRAR</Text>
       </TouchableOpacity>
+      
 
      
  

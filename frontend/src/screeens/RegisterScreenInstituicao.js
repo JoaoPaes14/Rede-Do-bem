@@ -38,12 +38,8 @@ const RegisterScreenOrg = ({ onNavigateToVagas, onNavigateToRegister }) => {
       const data = await response.json();
 
       if (response.status >= 200 && response.status < 300) {
-        Alert.alert('Cadastro bem-sucedido', `Bem-vindo, ${data.nome || data.Nome}!`, [
-          {
-            text: 'OK',
-            onPress: () => onNavigateToVagas(), // Navega para a tela de vagas após o cadastro bem-sucedido
-          },
-        ]);
+        // Redireciona automaticamente para a tela de vagas
+        onNavigateToVagas();
       }
     } catch (error) {
       console.error('Erro ao cadastrar instituição', error);
@@ -115,6 +111,8 @@ const RegisterScreenOrg = ({ onNavigateToVagas, onNavigateToRegister }) => {
         onChangeText={setCnpj}
       />
       <Button title="Cadastrar" onPress={handleCadastro} color="#007bff" />
+      
+    
     </ScrollView>
   );
 };
