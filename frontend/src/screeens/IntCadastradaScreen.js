@@ -1,11 +1,9 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
-const IntCadstradaScreen = ({ onNavigateToCadastro }) => {
-
+const IntCadstradaScreen = ({ onNavigateToCadastro, onNavigateToVagas, onNavigateToVolunt }) => {
     return (
         <View style={styles.container}>
-
             {/* Imagem no topo da tela */}
             <Image
                 source={require('../assets/logo.jpg')}
@@ -32,15 +30,19 @@ const IntCadstradaScreen = ({ onNavigateToCadastro }) => {
                 <Image source={require('../assets/gerando_falcoes.png')} style={styles.institution} />
             </View>
 
-           
             {/* Botão para levar à tela de cadastro */}
             <TouchableOpacity style={styles.button} onPress={onNavigateToCadastro}>
-                <Text style={styles.buttonText}>Cadastrar instituição</Text>
+                <Text style={styles.buttonText}>Cadastrar Organização</Text>
             </TouchableOpacity>
-            
+
             {/* Botão para ver vagas disponíveis */}
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={onNavigateToVagas}>
                 <Text style={styles.buttonText}>Vagas Disponíveis</Text>
+            </TouchableOpacity>
+
+            {/* Botão para ver voluntários */}
+            <TouchableOpacity style={styles.button} onPress={onNavigateToVolunt}>
+                <Text style={styles.buttonText}>Ver Voluntários</Text>
             </TouchableOpacity>
         </View>
     );
@@ -58,14 +60,12 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '30%',
         alignSelf: 'center',
-
     },
     divider: {
         width: '100%',
         height: 2,
         backgroundColor: '#007bff',
         alignSelf: 'center',
-
     },
     volunteerContainer: {
         alignItems: 'center',

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
 
-const TelaVagas = () => {
+const TelaVagas = ({onNavigateToVagas}) => {
     return (
         <View style={styles.container}>
 

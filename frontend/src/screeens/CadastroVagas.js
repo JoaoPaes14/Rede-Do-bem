@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, Button, Alert } from 'react-native';
-import voluntarios from './voluntarios';
 
 const VolunteerRegistrationScreen = ({ onNavigateHome }) => {
   const [institutionName, setInstitutionName] = useState('');
