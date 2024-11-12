@@ -1,30 +1,57 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Button } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, Button, ActivityIndicator } from 'react-native';
+import axios from 'axios';
 
-// Supondo que você tenha uma lista de voluntários passada como props
-const Voluntarios = ({ voluntarios, onNavigateHome }) => {
+const Voluntarios = ({ onNavigateHome }) => {
+  const [voluntarios, setVoluntarios] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchVoluntarios = async () => {
+      try {
+        const response = await axios.get('C:\\Users\\01000182265\\Documents\\REDE\\Rede-Do-bem\\backend\\routes\\VagasRoutes.js');
+        setVoluntarios(response.data);
+      } catch (err) {
+        setError('Erro ao carregar os voluntários');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchVoluntarios();
+  }, []);
+
+  if (loading) {
+    return <ActivityIndicator size="large" color="#007bff" />;
+  }
+
+  if (error) {
+    return <Text style={styles.errorText}>{error}</Text>;
+  }
+
   return (
-      <View style={styles.container}>
-        <Text style={styles.title}>Voluntários Candidatos</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Voluntários Candidatos</Text>
 
-        <ScrollView style={styles.scrollView}>
-          {voluntarios && voluntarios.length > 0 ? (
-              voluntarios.map((voluntario, index) => (
-                  <View key={index} style={styles.volunteerCard}>
-                    <Text style={styles.volunteerText}>Nome: {voluntario.nome}</Text>
-                    <Text style={styles.volunteerText}>Email: {voluntario.email}</Text>
-                    <Text style={styles.volunteerText}>Horas Oferecidas: {voluntario.quantidadeHoras}</Text>
-                    <Text style={styles.volunteerText}>Dias da Semana: {voluntario.diasSemana}</Text>
-                    <Text style={styles.volunteerText}>Horas Complementares: {voluntario.quantidadeHorasComplementares}</Text>
-                  </View>
-              ))
-          ) : (
-              <Text style={styles.noVolunteersText}>Nenhum voluntário se cadastrou ainda.</Text>
-          )}
-        </ScrollView>
+      <ScrollView style={styles.scrollView}>
+        {voluntarios.length > 0 ? (
+          voluntarios.map((voluntario, index) => (
+            <View key={index} style={styles.volunteerCard}>
+              <Text style={styles.volunteerText}>Nome: {voluntario.nome}</Text>
+              <Text style={styles.volunteerText}>Email: {voluntario.email}</Text>
+              <Text style={styles.volunteerText}>Horas Oferecidas: {voluntario.quantidadeHoras}</Text>
+              <Text style={styles.volunteerText}>Dias da Semana: {voluntario.diasSemana}</Text>
+              <Text style={styles.volunteerText}>Horas Complementares: {voluntario.quantidadeHorasComplementares}</Text>
+            </View>
+          ))
+        ) : (
+          <Text style={styles.noVolunteersText}>Nenhum voluntário se cadastrou ainda.</Text>
+        )}
+      </ScrollView>
 
-        <Button title="Voltar para Home" onPress={onNavigateHome} color="#007bff" />
-      </View>
+      <Button title="Voltar para Home" onPress={onNavigateHome} color="#007bff" />
+    </View>
   );
 };
 
@@ -62,6 +89,11 @@ const styles = StyleSheet.create({
   noVolunteersText: {
     fontSize: 16,
     color: '#999',
+    textAlign: 'center',
+  },
+  errorText: {
+    fontSize: 16,
+    color: 'red',
     textAlign: 'center',
   },
 });
