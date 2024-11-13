@@ -4,6 +4,7 @@ const { connectDB, sequelize } = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
 const CadastroOrgRoutes = require("./routes/CadastroOrgRoutes");
 const VagasRoutes = require('./routes/VagasRoutes'); 
+const VoluntarioRoutes = require('./routes/VoluntarioRoutes');
 const cors = require('cors');
 
 dotenv.config();
@@ -29,8 +30,9 @@ sequelize.sync({ force: false })
 app.use('/api/users', userRoutes)
 app.use('/api/Organizacao' , CadastroOrgRoutes);
 app.use('/api/Vagas', VagasRoutes);
+app.use('/api/voluntarios', VoluntarioRoutes);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8088;
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });

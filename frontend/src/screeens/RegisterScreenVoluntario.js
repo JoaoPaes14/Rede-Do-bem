@@ -1,34 +1,44 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Image, StyleSheet, TouchableOpacity, Alert,ScrollView } from 'react-native';
+import { View, Text, TextInput, Button, Image, StyleSheet, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import axios from 'axios';
-const RegisterScreenVoluntario = ({ onNavigateToLogin, onNavigateToVoluntario}) => {
-    const [Nome, setNome] = useState('');
-    const [Idade, setIdade] = useState('');
-    const [Email, setEmail] = useState('');
-    const [Senha, setSenha] = useState('');
-    const [ConfirmarSenha, setConfirmarSenha] = useState('');
-    const [HorasDisponiveis, setHorasDisponiveis] = useState('');
-    const handleRegister = async () => {
-        if (Senha !== ConfirmarSenha) {
+
+const RegisterScreenVoluntario = ({ onNavigateToLogin }) => {
+    const [nome, setNome] = useState('');
+    const [idade, setIdade] = useState('');
+    const [email, setEmail] = useState('');
+    const [senha, setSenha] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [qtd_horas_disponiveis, setQtd_horas_disponiveis] = useState('');
+    const [showMensagemSucesso, setMensagemSucesso] = useState(false);
+
+    const handleCadastro = async () => {
+        // Verifica se as senhas coincidem
+        if (senha !== confirmPassword) {
             Alert.alert('Erro', 'As senhas não coincidem.');
             return;
         }
+
         try {
-            const response = await axios.post('http://10.0.2.2:8088/api/register', {
-                Nome,
-                Idade,
-                Email,
-                Senha,
-                HorasDisponiveis,
+            const response = await axios.post('http://localhost:8088/api/voluntarios/voluntario', {
+                Nome: nome,
+                Idade: idade,
+                Email: email,
+                Senha: senha,
+                Qtd_horas_disponiveis: qtd_horas_disponiveis
             });
-            console.log('Resposta da API:', response.data); // Log da resposta
-            Alert.alert('Cadastro bem-sucedido', `Bem-vindo, ${response.data.name}!`);
-            onNavigateToLogin(); // Navegar para a tela de login
+
+            console.log('Resposta da API:', response.data);
+            setMensagemSucesso(true);
+            setTimeout(() => {
+                setMensagemSucesso(false);
+                onNavigateToLogin(); // Redireciona para a tela de login após o cadastro
+            }, 2000); // A mensagem desaparece após 2 segundos
         } catch (error) {
             console.error('Erro ao cadastrar:', error.response ? error.response.data : error.message);
-            Alert.alert('Erro', 'Erro ao cadastrar. Tente novamente.');
+            Alert.alert('Erro', `Erro ao cadastrar: ${error.response ? error.response.data.message : error.message}`);
         }
     };
+
     return (
         <ScrollView contentContainerStyle={styles.container}>
             <Image
@@ -37,18 +47,19 @@ const RegisterScreenVoluntario = ({ onNavigateToLogin, onNavigateToVoluntario}) 
                 resizeMode="cover"
             />
             <View style={styles.divider} />
+
             <TextInput
                 style={styles.input}
                 placeholder="NOME"
                 placeholderTextColor="#d9edf3"
-                value={Nome}
+                value={nome}
                 onChangeText={setNome}
             />
             <TextInput
                 style={styles.input}
                 placeholder="IDADE"
                 placeholderTextColor="#d9edf3"
-                value={Idade}
+                value={idade}
                 onChangeText={setIdade}
                 keyboardType="numeric"
             />
@@ -56,14 +67,14 @@ const RegisterScreenVoluntario = ({ onNavigateToLogin, onNavigateToVoluntario}) 
                 style={styles.input}
                 placeholder="E-MAIL"
                 placeholderTextColor="#d9edf3"
-                value={Email}
+                value={email}
                 onChangeText={setEmail}
             />
             <TextInput
                 style={styles.input}
                 placeholder="SENHA"
                 placeholderTextColor="#d9edf3"
-                value={Senha}
+                value={senha}
                 onChangeText={setSenha}
                 secureTextEntry
             />
@@ -71,27 +82,33 @@ const RegisterScreenVoluntario = ({ onNavigateToLogin, onNavigateToVoluntario}) 
                 style={styles.input}
                 placeholder="CONFIRMAR SENHA"
                 placeholderTextColor="#d9edf3"
-                value={ConfirmarSenha}
-                onChangeText={setConfirmarSenha}
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
                 secureTextEntry
             />
             <TextInput
                 style={styles.input}
                 placeholder="HORAS DISPONÍVEIS"
                 placeholderTextColor="#d9edf3"
-                value={HorasDisponiveis}
-                onChangeText={setHorasDisponiveis}
+                value={qtd_horas_disponiveis}
+                onChangeText={setQtd_horas_disponiveis}
                 keyboardType="numeric"
             />
-            <TouchableOpacity style={styles.button} onPress={handleRegister}>
+
+            <TouchableOpacity style={styles.button} onPress={handleCadastro}>
                 <Text style={styles.buttonText}>CADASTRAR</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={onNavigateToLogin}>
-                <Text style={styles.toggleText}>Já tem uma conta? Faça login</Text>
-            </TouchableOpacity>
-            </ScrollView>
+
+
+            {showMensagemSucesso && (
+                <View style={styles.successMessage}>
+                    <Text style={styles.successMessageText}>Cadastro realizado com sucesso!</Text>
+                </View>
+            )}
+        </ScrollView>
     );
 };
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -140,5 +157,18 @@ const styles = StyleSheet.create({
         color: '#007bff',
         textDecorationLine: 'underline',
     },
+    successMessage: {
+        backgroundColor: '#333',
+        padding: 20,
+        borderRadius: 10,
+        width: 300,
+        alignItems: 'center',
+    },
+    successMessageText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
 });
+
 export default RegisterScreenVoluntario;

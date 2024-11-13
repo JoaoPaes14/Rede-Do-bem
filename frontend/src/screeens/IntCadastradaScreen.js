@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
-const IntCadstradaScreen = ({ onNavigateToCadastro }) => {
+const IntCadstradaScreen = ({ onNavigateToCadastro ,onNavigateToQdVagas}) => {
 
     return (
         <View style={styles.container}>
@@ -38,9 +38,10 @@ const IntCadstradaScreen = ({ onNavigateToCadastro }) => {
                 <Text style={styles.buttonText}>Cadastrar instituição</Text>
             </TouchableOpacity>
             
-            {/* Botão para ver vagas disponíveis */}
-            <TouchableOpacity style={styles.button}>
-                <Text style={styles.buttonText}>Vagas Disponíveis</Text>
+            
+            {/* Botão para levar à tela de cadastro */}
+            <TouchableOpacity style={styles.button} onPress={onNavigateToQdVagas}>
+                <Text style={styles.buttonText}>Quadro de Vagas</Text>
             </TouchableOpacity>
         </View>
     );
