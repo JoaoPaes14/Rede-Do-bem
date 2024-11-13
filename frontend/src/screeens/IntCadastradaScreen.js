@@ -1,10 +1,18 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
-const IntCadstradaScreen = ({ onNavigateToCadastro ,onNavigateToQdVagas}) => {
+const IntCadstradaScreen = ({ onNavigateToCadastro ,onNavigateToQdVagas,onNavigateToPrincipal}) => {
 
     return (
         <View style={styles.container}>
+
+            {/* Botão de Sair (ícone no canto superior esquerdo) */}
+            <TouchableOpacity style={styles.exitIcon} onPress={onNavigateToPrincipal}>
+                <Image
+                    source={require('../assets/EXIT.png')} 
+                    style={styles.exitImage}
+                />
+            </TouchableOpacity>
 
             {/* Imagem no topo da tela */}
             <Image
@@ -43,6 +51,7 @@ const IntCadstradaScreen = ({ onNavigateToCadastro ,onNavigateToQdVagas}) => {
             <TouchableOpacity style={styles.button} onPress={onNavigateToQdVagas}>
                 <Text style={styles.buttonText}>Quadro de Vagas</Text>
             </TouchableOpacity>
+           
         </View>
     );
 };
@@ -112,6 +121,24 @@ const styles = StyleSheet.create({
         color: '#FFFFFF',
         fontSize: 16,
         fontWeight: 'bold',
+    },
+    exitIcon: {
+        position: 'absolute',
+        top: 40, // Ajuste conforme necessário para sua tela
+        left: 20, // Ajuste conforme necessário para sua tela
+        zIndex: 1,
+        borderWidth: 1, // Borda preta ao redor do ícone
+    borderColor: '#ccc', // Cor da borda cinza clara para combinar com os estilos fornecidos
+    borderRadius: 35, // Arredondamento para ficar circular
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10,
+    backgroundColor: '#d9edf3',
+    },
+    exitImage: {
+        width: 30,
+        height: 30,
+       
     },
 });
 

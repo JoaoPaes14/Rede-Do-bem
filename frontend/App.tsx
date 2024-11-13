@@ -8,9 +8,11 @@ import CadastroVagas from './src/screeens/CadastroVagas.js';
 import RegisterScreenVoluntario from './src/screeens/RegisterScreenVoluntario.js';
 import TelaVagas from './src/screeens/QuadrodeVagas.js';
 import Voluntarios from './src/screeens/voluntario.js';
+import LoginScreenOrg from './src/screeens/loginOrg.js';
+import ScreenPrincipal from './src/screeens/ScreenPrincipa.js';
 
 const App = () => {
-    const [screen, setScreen] = useState('login');  // Controla qual tela deve ser exibida
+    const [screen, setScreen] = useState('Principal');  // Controla qual tela deve ser exibida
     // Funções de navegação
     const handleNavigateToVolunt = () => {
         setScreen('instituicoesCadastradas');  // Navega para a tela de instituições cadastradas
@@ -36,6 +38,13 @@ const App = () => {
   const handleNavigateToVolunt1 = () => {
     setScreen('Volunt'); // Navega para a tela de cadastro de vagas
 };
+const handleNavigateToLoginOrg = () => {
+    setScreen('Org'); // Navega para a tela de cadastro de vagas
+};
+const handleNavigateToPrincipal = () => {
+    setScreen('Principal'); // Navega para a tela de cadastro de vagas
+};
+
 
   
     return (
@@ -47,15 +56,12 @@ const App = () => {
             
             {/* Tela de Instituições Cadastradas */}
             {screen === 'instituicoesCadastradas' && (
-                <IntCadstradaScreen onNavigateToCadastro={handleNavigateToCadastro} onNavigateToQdVagas={handleNavigateToQdVagas}/>
+                <IntCadstradaScreen onNavigateToPrincipal={handleNavigateToPrincipal}onNavigateToCadastro={handleNavigateToCadastro} onNavigateToQdVagas={handleNavigateToQdVagas}/>
             )}
   
             {/* Tela de Registro de Organização */}
             {screen === 'register' && (
-                <RegisterScreenOrg 
-                
-                  onNavigateToVagas={handleNavigateToVagas} 
-                />
+                <RegisterScreenOrg  NavigateToLoginOrg={handleNavigateToLoginOrg}  />
             )}
   
             {/* Tela de Cadastro de Vagas */}
@@ -68,9 +74,13 @@ const App = () => {
              {screen === 'QdVagas' && (
                 <TelaVagas onNavigateToVolunt={handleNavigateToVolunt} />
             )}
-            {screen === 'Volunt' && (
-               <Voluntarios onNavigateToVolunt1={handleNavigateToVolunt1} />
+            {screen === 'Org' && (
+               <LoginScreenOrg onNavigateToVagas={handleNavigateToVagas}onNavigateToCadastro={handleNavigateToCadastro} />
            )}
+            {screen === 'Principal' && (
+               <ScreenPrincipal onNavigateToLogin={handleNavigateToLogin} NavigateToLoginOrg={handleNavigateToLoginOrg}  />
+           )}
+ 
  
   
             <StatusBar style="auto" />

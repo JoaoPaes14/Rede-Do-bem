@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert, Image, ScrollView, Modal } from 'react-native';
 
-const RegisterScreenOrg = ({ onNavigateToVagas, }) => {
+const RegisterScreenOrg = ({ NavigateToLoginOrg, }) => {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [endereco, setEndereco] = useState('');
@@ -41,7 +41,7 @@ const RegisterScreenOrg = ({ onNavigateToVagas, }) => {
         setMensagemSucesso(true);
         setTimeout(() => {
           setMensagemSucesso(false);
-          onNavigateToVagas();
+          NavigateToLoginOrg();
         }, 2000); // A mensagem desaparece após 2 segundos
       } else {
         Alert.alert('Erro', data.message || 'Ocorreu um erro ao cadastrar. Tente novamente.');

@@ -1,3 +1,5 @@
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const Organizacao = require('../models/CadastroOrgModel');
 
 const getOrganizacoes = async (req, res) => {
@@ -31,8 +33,9 @@ const createOrganizacao = async (req, res) => {
     if (organizacaoExists) {
       return res.status(400).json({ message: 'Organização já existe com esse email' });
     }
-
-    const newOrganizacao = await Organizacao.create({ Nome, Email, Endereco, Telefone, Area_atuacao, Senha, Cnpj });
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(Senha, saltRounds);
+    const newOrganizacao = await Organizacao.create({ Nome, Email, Endereco, Telefone, Area_atuacao, Senha: hashedPassword, Cnpj });
     return res.status(201).json(newOrganizacao);
   } catch (error) {
     console.error('Erro ao criar organização:', error);
@@ -40,4 +43,32 @@ const createOrganizacao = async (req, res) => {
   }
 };
 
-module.exports = { getOrganizacoes, createOrganizacao };
+const loginOrganizacao = async (req, res) => {
+  const { email, senha } = req.body;
+
+  if (!email || !senha) {
+    return res.status(400).json({ message: 'Por favor, preencha todos os campos' });
+  }
+
+  try {
+    const organizacao = await Organizacao.findOne({ where: { Email: email } });
+
+    if (!organizacao) {
+      return res.status(401).json({ message: 'Credenciais inválidas' });
+    }
+
+    // Se você estiver usando bcrypt para senha
+    const validPassword = await bcrypt.compare(senha, organizacao.Senha);
+    if (!validPassword) {
+      return res.status(401).json({ message: 'Credenciais inválidas' });
+    }
+
+    // Sucesso no login
+    return res.status(200).json({ message: 'Login bem-sucedido', nome: organizacao.Nome });
+  } catch (error) {
+    console.error('Erro ao fazer login:', error);
+    return res.status(500).json({ message: 'Erro interno do servidor' });
+  }
+};
+
+module.exports = { getOrganizacoes, createOrganizacao, loginOrganizacao };
