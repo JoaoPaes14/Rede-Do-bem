@@ -1,34 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Button, ActivityIndicator } from 'react-native';
-import axios from 'axios';
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView, Button } from 'react-native';
 
 const Voluntarios = ({ onNavigateHome }) => {
-  const [voluntarios, setVoluntarios] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchVoluntarios = async () => {
-      try {
-        const response = await axios.get('C:\\Users\\01000182265\\Documents\\REDE\\Rede-Do-bem\\backend\\routes\\VagasRoutes.js');
-        setVoluntarios(response.data);
-      } catch (err) {
-        setError('Erro ao carregar os voluntários');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchVoluntarios();
-  }, []);
-
-  if (loading) {
-    return <ActivityIndicator size="large" color="#007bff" />;
-  }
-
-  if (error) {
-    return <Text style={styles.errorText}>{error}</Text>;
-  }
+  // Dados fixos de voluntários
+  const voluntarios = [
+    {
+      id: 1,
+      nome: 'João Silva',
+      email: 'joao.silva@example.com',
+      quantidadeHoras: 10,
+      diasSemana: 'Segunda, Quarta, Sexta',
+      quantidadeHorasComplementares: 5,
+    },
+    {
+      id: 2,
+      nome: 'Maria Oliveira',
+      email: 'maria.oliveira@example.com',
+      quantidadeHoras: 15,
+      diasSemana: 'Terça, Quinta',
+      quantidadeHorasComplementares: 3,
+    },
+    {
+      id: 3,
+      nome: 'Carlos Pereira',
+      email: 'carlos.pereira@example.com',
+      quantidadeHoras: 20,
+      diasSemana: 'Sábado, Domingo',
+      quantidadeHorasComplementares: 8,
+    },
+  ];
 
   return (
     <View style={styles.container}>
@@ -36,8 +36,8 @@ const Voluntarios = ({ onNavigateHome }) => {
 
       <ScrollView style={styles.scrollView}>
         {voluntarios.length > 0 ? (
-          voluntarios.map((voluntario, index) => (
-            <View key={index} style={styles.volunteerCard}>
+          voluntarios.map((voluntario) => (
+            <View key={voluntario.id} style={styles.volunteerCard}>
               <Text style={styles.volunteerText}>Nome: {voluntario.nome}</Text>
               <Text style={styles.volunteerText}>Email: {voluntario.email}</Text>
               <Text style={styles.volunteerText}>Horas Oferecidas: {voluntario.quantidadeHoras}</Text>
@@ -89,11 +89,6 @@ const styles = StyleSheet.create({
   noVolunteersText: {
     fontSize: 16,
     color: '#999',
-    textAlign: 'center',
-  },
-  errorText: {
-    fontSize: 16,
-    color: 'red',
     textAlign: 'center',
   },
 });
