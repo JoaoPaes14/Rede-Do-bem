@@ -18,7 +18,7 @@ const Voluntarios = ({ onNavigateHome }) => {
       email: 'maria.oliveira@example.com',
       quantidadeHoras: 15,
       diasSemana: 'Terça, Quinta',
-      quantidadeHorasComplementares: 3,
+      quantidadeHorasComplementares: 10,
     },
     {
       id: 3,
