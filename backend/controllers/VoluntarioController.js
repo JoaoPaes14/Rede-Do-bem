@@ -86,4 +86,26 @@ const loginVoluntario = async (req, res) => {
   }
 };
 
-module.exports = { getVoluntarios, createVoluntario, loginVoluntario };
+const getVoluntarioInfo = async (req, res) => {
+  try {
+    // Buscando os três primeiros voluntários
+    const voluntarios = await Voluntario.findAll({
+      limit: 3, // Limita a busca aos 3 primeiros voluntários
+      attributes: ['nome', 'email', 'Qtd_horas_disponiveis', 'idade'],
+      order: [['Cod_voluntario', 'ASC']], // Ordena pelo id, caso queira os primeiros inseridos
+    });
+
+    if (voluntarios.length > 0) {
+      return res.status(200).json(voluntarios);
+    } else {
+      return res.status(404).json({ message: 'Nenhum voluntário encontrado.' });
+    }
+  } catch (error) {
+    console.error('Erro ao buscar voluntários:', error);
+    return res.status(500).json({ message: 'Erro ao buscar voluntários.', error: error.message });
+  }
+};
+
+
+
+module.exports = { getVoluntarios, createVoluntario, loginVoluntario, getVoluntarioInfo };
