@@ -13,7 +13,7 @@ import ScreenPrincipal from './src/screeens/ScreenPrincipa.js';
 import OrgMenu from './src/screeens/IntOrgMenu.js';
 
 const App = () => {
-    const [screen, setScreen] = useState('VoluntCadast');  // Controla qual tela deve ser exibida
+    const [screen, setScreen] = useState('Principal');  // Controla qual tela deve ser exibida
     // Funções de navegação
     const handleNavigateToVolunt = () => {
         setScreen('instituicoesCadastradas');  // Navega para a tela de instituições cadastradas
