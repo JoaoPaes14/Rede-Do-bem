@@ -32,7 +32,7 @@ const RegisterScreenVoluntario = ({ onNavigateToLogin }) => {
             setTimeout(() => {
                 setMensagemSucesso(false);
                 onNavigateToLogin(); // Redireciona para a tela de login após o cadastro
-            }, 2000); // A mensagem desaparece após 2 segundos
+            }, 3000); // A mensagem desaparece após 2 segundos
         } catch (error) {
             console.error('Erro ao cadastrar:', error.response ? error.response.data : error.message);
             Alert.alert('Erro', `Erro ao cadastrar: ${error.response ? error.response.data.message : error.message}`);

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Image } from 'react-native';
 import axios from 'axios';
 
-const LoginScreenOrg = ({ onNavigateToCadastro,  onNavigateToVagas }) => {
+const LoginScreenOrg = ({ onNavigateToCadastro,  onNavigateToOrgMenu }) => {
   const [Email, setEmail] = useState('');
   const [Senha, setSenha] = useState('');
   const [loading, setLoading] = useState(false);
@@ -26,7 +26,7 @@ const LoginScreenOrg = ({ onNavigateToCadastro,  onNavigateToVagas }) => {
       Alert.alert('Login bem-sucedido', `Bem-vindo, ${response.data.nome}!`);
 
       // Redirecionando para a tela principal após login
-      onNavigateToVagas();
+      onNavigateToOrgMenu();
     } catch (error) {
       console.error('Erro ao fazer login:', error.response ? error.response.data : error.message);
       Alert.alert('Erro', 'Credenciais inválidas. Tente novamente.');

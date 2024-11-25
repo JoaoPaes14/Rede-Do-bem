@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert, Image } from 'react-native';
 
-const RegisterVagas = ({ onNavigateToVagas }) => {
+const RegisterVagas = ({ onNavigateToVoluntCadast }) => {
   const [tipoVaga, setTipoVaga] = useState('');
   const [habilidades, setHabilidades] = useState('');
   const [diasSemana, setDiasSemana] = useState('');
@@ -34,7 +34,7 @@ const RegisterVagas = ({ onNavigateToVagas }) => {
 
       if (response.ok) {
         Alert.alert('Cadastro bem-sucedido', `Vaga cadastrada com sucesso!`);
-        onNavigateToVagas(); // Navega de volta após o cadastro da vaga
+        onNavigateToVoluntCadast(); // Navega de volta após o cadastro da vaga
       } else {
         Alert.alert('Erro', data.message || 'Erro ao cadastrar vaga');
       }

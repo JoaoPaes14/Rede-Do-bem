@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     height: '40%',
   },
   optionsRow: {
-    flexDirection: 'row', // Exibe os botões lado a lado
+    flexDirection: 'row', 
     justifyContent: 'space-around',
     width: '80%',
     marginVertical: 20,
@@ -67,15 +67,15 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   iconContainer: {
-    width: 90,
-    height: 90,
-    borderWidth: 1, // Borda preta ao redor do ícone
-    borderColor: '#ccc', // Cor da borda cinza clara para combinar com os estilos fornecidos
-    borderRadius: 35, // Arredondamento para ficar circular
+    width: 100,
+    height: 100,
+    borderWidth: 1, 
+    borderColor: '#ccc', 
+    borderRadius: 35, 
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 10,
-    
+
   },
   icon: {
     width: 70,

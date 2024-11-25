@@ -42,7 +42,7 @@ const RegisterScreenOrg = ({ NavigateToLoginOrg, }) => {
         setTimeout(() => {
           setMensagemSucesso(false);
           NavigateToLoginOrg();
-        }, 2000); // A mensagem desaparece após 2 segundos
+        }, 3000); // A mensagem desaparece após 2 segundos
       } else {
         Alert.alert('Erro', data.message || 'Ocorreu um erro ao cadastrar. Tente novamente.');
       }
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#646262',
     paddingVertical: 10,
     paddingHorizontal: 25,
-    marginBottom: 20,
+    marginBottom: 10,
     borderRadius: 50,
     color: '#fff',
     fontSize: 12,

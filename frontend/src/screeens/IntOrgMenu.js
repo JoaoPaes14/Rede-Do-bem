@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
-const IntCadstradaScreen = ({ onNavigateToQdVagas,onNavigateToPrincipal}) => {
+const OrgMenu = ({ onNavigateToVagas, onNavigateToPrincipal }) => {
 
     return (
         <View style={styles.container}>
@@ -9,7 +9,7 @@ const IntCadstradaScreen = ({ onNavigateToQdVagas,onNavigateToPrincipal}) => {
             {/* Botão de Sair (ícone no canto superior esquerdo) */}
             <TouchableOpacity style={styles.exitIcon} onPress={onNavigateToPrincipal}>
                 <Image
-                    source={require('../assets/EXIT.png')} 
+                    source={require('../assets/EXIT.png')}
                     style={styles.exitImage}
                 />
             </TouchableOpacity>
@@ -26,10 +26,10 @@ const IntCadstradaScreen = ({ onNavigateToQdVagas,onNavigateToPrincipal}) => {
             {/* Avatar do voluntário */}
             <View style={styles.volunteerContainer}>
                 <Image
-                    source={require('../assets/volunteer_avatar.png')}
+                    source={require('../assets/Org.png')}
                     style={styles.avatar}
                 />
-                <Text style={styles.volunteerText}>VOLUNTÁRIO</Text>
+                <Text style={styles.volunteerText}>INSTITUIÇÃO</Text>
             </View>
 
             {/* Instituições cadastradas */}
@@ -40,15 +40,15 @@ const IntCadstradaScreen = ({ onNavigateToQdVagas,onNavigateToPrincipal}) => {
                 <Image source={require('../assets/gerando_falcoes.png')} style={styles.institution} />
             </View>
 
-           
-            
-            
-            
+
             {/* Botão para levar à tela de cadastro */}
-            <TouchableOpacity style={styles.button} onPress={onNavigateToQdVagas}>
-                <Text style={styles.buttonText}>Quadro de Vagas</Text>
+            <TouchableOpacity style={styles.button} onPress={onNavigateToVagas}>
+                <Text style={styles.buttonText}>Cadastrar Vaga</Text>
             </TouchableOpacity>
+
+
            
+
         </View>
     );
 };
@@ -76,7 +76,8 @@ const styles = StyleSheet.create({
     },
     volunteerContainer: {
         alignItems: 'center',
-        marginVertical: 20,
+        marginVertical: 40,
+        
     },
     avatar: {
         width: 80,
@@ -116,27 +117,27 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: '#FFFFFF',
-        fontSize: 16,
+        fontSize: 12,
         fontWeight: 'bold',
     },
     exitIcon: {
         position: 'absolute',
-        top: 40, // Ajuste conforme necessário para sua tela
-        left: 20, // Ajuste conforme necessário para sua tela
+        top: 40,
+        left: 20,
         zIndex: 1,
-        borderWidth: 1, // Borda preta ao redor do ícone
-    borderColor: '#ccc', // Cor da borda cinza clara para combinar com os estilos fornecidos
-    borderRadius: 35, // Arredondamento para ficar circular
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 10,
-    backgroundColor: '#d9edf3',
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 35,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 10,
+        backgroundColor: '#d9edf3',
     },
     exitImage: {
         width: 30,
         height: 30,
-       
+
     },
 });
 
-export default IntCadstradaScreen;
+export default OrgMenu;
