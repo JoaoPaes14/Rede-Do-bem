@@ -76,7 +76,7 @@ const loginVoluntario = async (req, res) => {
     }
 
     const token = jwt.sign({ voluntarioId: voluntario.Cod_voluntario }, 'secreta_chave', { expiresIn: '1h' });
-    res.json({
+    res.json({ 
       nome: voluntario.nome,
       token: token,
     });
@@ -94,7 +94,6 @@ const getVoluntarioInfo = async (req, res) => {
       attributes: ['nome', 'email', 'Qtd_horas_disponiveis', 'idade'],
       order: [['Cod_voluntario', 'ASC']], // Ordena pelo id, caso queira os primeiros inseridos
     });
-
     if (voluntarios.length > 0) {
       return res.status(200).json(voluntarios);
     } else {
@@ -105,7 +104,4 @@ const getVoluntarioInfo = async (req, res) => {
     return res.status(500).json({ message: 'Erro ao buscar voluntários.', error: error.message });
   }
 };
-
-
-
 module.exports = { getVoluntarios, createVoluntario, loginVoluntario, getVoluntarioInfo };

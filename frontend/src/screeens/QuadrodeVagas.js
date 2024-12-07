@@ -1,46 +1,54 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, ScrollView ,TouchableOpacity} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
+import axios from 'axios';
 
 const TelaVagas = ({ onNavigateToVolunt }) => {
+    const [vagas, setVagas] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
+
+    const fetchVagas = async () => {
+        try {
+            setError(false);
+            const response = await axios.get('http://localhost:8088/api/Vagas'); // Atualize com o IP do backend
+            setVagas(response.data);
+        } catch (err) {
+            console.error('Erro ao buscar vagas:', err);
+            setError(true);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchVagas();
+    }, []);
+
     return (
         <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
-            <Image
-                source={require('../assets/logo.jpg')} 
-                style={styles.logo}
-                resizeMode="cover"
-            />
+              <Text style={styles.title}>Vagas Cadastradas</Text>
             <View style={styles.divider} />
-
-            {/* Cartão de Vaga: Farol na quebrada */}
-            <View style={styles.card}>
-                <Text style={styles.sectionTitle}>Farol na quebrada:</Text>
-                <Text style={styles.itemText}>- Vaga para educador social em Lutas;</Text>
-                <Text style={styles.itemText}>- 6 horas semanais;</Text>
-                <Text style={styles.itemText}>- Seg, Quarta e Sexta;</Text>
-                <Text style={styles.itemText}>- 17 às 19 horas;</Text>
-                <Text style={styles.itemText}>- 24 horas mensais no certificado;</Text>
-                <Text style={styles.itemCode}>cod: 012203</Text>
-            </View>
-
-            {/* Cartão de Vaga: Abrigo Flora e Fauna */}
-            <View style={styles.card}>
-                <Text style={styles.sectionTitle}>Abrigo Flora e Fauna:</Text>
-                <Text style={styles.itemText}>- Vaga para banho em pets;</Text>
-                <Text style={styles.itemText}>- 2 a 4 horas mensais;</Text>
-                <Text style={styles.itemText}>- Um dia no mês;</Text>
-                <Text style={styles.itemText}>- 8 às 12;</Text>
-                <Text style={styles.itemText}>- 4 horas no certificado;</Text>
-                <Text style={styles.itemCode}>cod: 012205</Text>
-            </View>
-  {/* Botão de navegação para a tela de "Home" */}
-  <View style={styles.footer}>
+            {loading ? (
+                <ActivityIndicator size="large" color="#0000ff" />
+            ) : error ? (
+                <Text style={{ color: 'red', textAlign: 'center' }}>Erro ao carregar vagas. Tente novamente.</Text>
+            ) : (
+                vagas.map((vaga) => (
+                    <View key={vaga.id} style={styles.card}>
+                        <Text style={styles.sectionTitle}>{vaga.Tipo_vaga}:</Text>
+                        <Text style={styles.itemText}>- Habilidades: {vaga.Habilidades};</Text>
+                        <Text style={styles.itemText}>- Dias: {vaga.Dias_semana};</Text>
+                        <Text style={styles.itemText}>- Horário: {vaga.Horario};</Text>
+                        <Text style={styles.itemText}>- Horas no certificado: {vaga.Horas_certificado};</Text>
+                        <Text style={styles.itemCode}>Cod: {vaga.Cod_vaga}</Text>
+                    </View>
+                ))
+            )}
+            <View style={styles.footer}>
                 <TouchableOpacity onPress={onNavigateToVolunt}>
-                    <Image
-                        source={require('../assets/Home.png')} // Adicione uma imagem de casinha em '../assets/home-icon.png'
-                        style={styles.footerIcon}
-                    />
+                    <Image source={require('../assets/Home.png')} style={styles.footerIcon} />
                 </TouchableOpacity>
-                </View>
+            </View>
         </ScrollView>
     );
 };
@@ -54,8 +62,9 @@ const styles = StyleSheet.create({
     },
     logo: {
         width: '100%',
-        height: 200, // Altura fixa para melhor adaptação em várias telas
-      },
+        height: undefined,
+        aspectRatio: 16 / 9,
+    },
     divider: {
         height: 1,
         width: '100%',
